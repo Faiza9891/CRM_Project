@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 
 const contactSchema = new mongoose.Schema({
-  customer_id:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customer'
-  },
+  // customer_id:{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Customer'
+  // },
     name: {
         type: String,
         required: [true, "Please Enter Your Name"],

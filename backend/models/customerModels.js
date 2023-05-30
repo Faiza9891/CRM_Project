@@ -28,7 +28,7 @@ const customerSchema = new mongoose.Schema({
         type: String, 
       required: true 
     },
-      created_at: {
+      created_at: { 
          type: Date,
          default: Date.now
          },
