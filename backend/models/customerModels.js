@@ -3,9 +3,6 @@ const contactSchema = require("./contactModel")
 
 
 const customerSchema = new mongoose.Schema({
-  customer_id:{
-    type: mongoose.Schema.Types.ObjectId
-  },
     name: {
         type: String,
         required: [true, "Please Enter Your Name"],
@@ -23,10 +20,19 @@ const customerSchema = new mongoose.Schema({
         required: [true, "Please Enter Your Number"],
         minLength: [10, "Password should be greater than 8 characters"]
       },
-      contacts: [contactSchema],
       address: {
         type: String, 
       required: true 
+    },
+    subCustomers: [contactSchema],
+    addSubCustomers : {
+      type : String,
+      default: "ADD"
+    },
+    status: {
+      type: String,
+      required: true,
+      default : "Active"
     },
       created_at: { 
          type: Date,
@@ -40,6 +46,7 @@ const customerSchema = new mongoose.Schema({
          type: Date,
          default: Date.now
          }
+
   });
   
   module.exports = mongoose.model('Customer', customerSchema);
