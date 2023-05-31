@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
-
-const contactSchema = new mongoose.Schema({
+const subcustomerSchema = new mongoose.Schema({
   // customer_id:{
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: 'Customer'
@@ -41,5 +40,4 @@ const contactSchema = new mongoose.Schema({
          }
   });
   
-  module.exports = mongoose.model('Contact', contactSchema);
-  module.exports = contactSchema;
+  module.exports = mongoose.model('Subcustomer', subcustomerSchema);

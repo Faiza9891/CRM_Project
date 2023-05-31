@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const contactSchema = require("./contactModel")
 
 
 const customerSchema = new mongoose.Schema({
@@ -24,7 +23,6 @@ const customerSchema = new mongoose.Schema({
         type: String, 
       required: true 
     },
-    subCustomers: [contactSchema],
     addSubCustomers : {
       type : String,
       default: "ADD"
