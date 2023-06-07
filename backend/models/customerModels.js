@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const customerSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -11,7 +10,7 @@ const customerSchema = new mongoose.Schema({
       email: {
         type: String,
         required: [true, "Please Enter Your Email"],
-        unique: true,
+        unique: false
        // validate: [validator.isEmail, "Please Enter a valid Email"],
       },
       phone: {
@@ -23,14 +22,9 @@ const customerSchema = new mongoose.Schema({
         type: String, 
       required: true 
     },
-    addSubCustomers : {
-      type : String,
-      default: "ADD"
-    },
     status: {
       type: String,
-      required: true,
-      default : "Active"
+      required: true
     },
       created_at: { 
          type: Date,
@@ -43,7 +37,12 @@ const customerSchema = new mongoose.Schema({
       time: {
          type: Date,
          default: Date.now
-         }
+         },
+  interactions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Interaction' }],
+  contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Contact' }],
+  activities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Activity' }],
+  opportunities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Opportunity' }],
+  notes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Note' }]
 
   });
   

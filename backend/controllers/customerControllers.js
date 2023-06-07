@@ -3,10 +3,10 @@ const Customer = require("../models/customerModels")
 
 exports.getAllCustomers = async (req, res) => {
     try {
-      const customers = await Customer.find();
+      const customers = await Customer.find(req.params.id);
       res.json(customers);
     } catch (error) {
-      res.status(500).json({ error: 'Please Enter Email' });
+      res.status(500).json({ error: 'Data Not Found' });
     }
   }; 
 
@@ -29,7 +29,7 @@ exports.getAllCustomers = async (req, res) => {
             await customer.save();
             res.status(201).json(customer);
           } catch (error) {
-            res.status(500).json({ error: 'Internal server error' });
+            res.status(500).json({ error: 'Request Error' });
           }
         };
 
@@ -60,4 +60,29 @@ exports.getAllCustomers = async (req, res) => {
             res.status(500).json({ error: 'Internal server error' });
           }
         };
+
+        // exports.getGeography = async (req, res) => {
+        //   try {
+        //     const customer = await Customer.find();
+        
+        //     const mappedLocations = customer.reduce((acc, { country }) => {
+        //       const countryISO3 = getCountryIso3(country);
+        //       if (!acc[countryISO3]) {
+        //         acc[countryISO3] = 0;
+        //       }
+        //       acc[countryISO3]++;
+        //       return acc;
+        //     }, {});
+        
+        //     const formattedLocations = Object.entries(mappedLocations).map(
+        //       ([country, count]) => {
+        //         return { id: country, value: count };
+        //       }
+        //     );
+        
+        //     res.status(200).json(formattedLocations);
+        //   } catch (error) {
+        //     res.status(404).json({ message: error.message });
+        //   }
+        // };
         
