@@ -57,8 +57,9 @@ exports.deleteOpportunity = async (req, res) => {
     if (!deletedOpportunity) {
       return res.status(404).json({ message: 'Opportunity not found' });
     }
-    res.json({ message: 'Opportunity deleted' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+    res.sendStatus(204);
+      } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+      }
 };
+

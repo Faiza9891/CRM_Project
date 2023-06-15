@@ -1,7 +1,7 @@
 const Note = require('../models/noteModel');
 
 // Get all notes
-exports.getAllNotes = async (req, res) => {
+const getAllNotes = async (req, res) => {
   try {
     const notes = await Note.find();
     res.json(notes);
@@ -11,7 +11,7 @@ exports.getAllNotes = async (req, res) => {
 };
 
 // Create a new note
-exports.addNote = async (req, res) => {
+const addNote = async (req, res) => {
   const note = new Note(req.body);
   try {
     const newNote = await note.save();
@@ -22,7 +22,7 @@ exports.addNote = async (req, res) => {
 };
 
 // Get a specific note by ID
-exports.getNote = async (req, res) => {
+const getNote = async (req, res) => {
   const { id } = req.params;
   try {
     const note = await Note.findById(id);
@@ -36,7 +36,7 @@ exports.getNote = async (req, res) => {
 };
 
 // Update a note
-exports.updateNote = async (req, res) => {
+const updateNote = async (req, res) => {
   const { id } = req.params;
   try {
     const updatedNote = await Note.findByIdAndUpdate(id, req.body, { new: true });
@@ -50,7 +50,7 @@ exports.updateNote = async (req, res) => {
 };
 
 // Delete a note
-exports.deleteNote = async (req, res) => {
+const deleteNote = async (req, res) => {
   const { id } = req.params;
   try {
     const deletedNote = await Note.findByIdAndDelete(id);
@@ -61,4 +61,12 @@ exports.deleteNote = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+module.exports = {
+  getAllNotes,
+  getNote,
+  addNote,
+  updateNote,
+  deleteNote,
 };

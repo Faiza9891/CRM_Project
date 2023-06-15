@@ -7,10 +7,6 @@ const app = express();
 const customer = require("./routes/customerRoute");
 
 
-
-
-
-
 app.use(cors());
 app.use(express.json());
 app.use(helmet());

@@ -49,10 +49,10 @@ const router = express.Router();
 
 // Customers
 router.route("/customers").get(getAllCustomers);
-router.route("/customer/:id").get(getCustomer);
-router.route("/customer").post(addCustomer);
-router.route("/customer/:id").put(updateCustomer);
-router.route("/customer/:id").delete(deleteCustomer);
+router.route("/customers/:id").get(getCustomer);
+router.route("/customers").post(addCustomer);
+router.route("/customers/:id").put(updateCustomer);
+router.route("/customers/:id").delete(deleteCustomer);
 //activity
 router.route("/activities").get(getAllActivities);
 router.route("/activities/:id").get(getActivity);
