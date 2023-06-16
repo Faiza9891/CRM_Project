@@ -1,5 +1,5 @@
 const Contact = require('../models/contactModel');
-const Customer = require('./customerControllers')
+const Customer = require('../models/customerModels')
 
 // // Get all contacts
 // exports.getAllContacts = async (req, res) => {
@@ -90,14 +90,49 @@ const Customer = require('./customerControllers')
 
 
 // Get all contacts with customer names
+// exports.getAllContacts = async (req, res) => {
+//   try {
+//     const contacts = await Contact.find().populate('customer','name');
+//     res.json(contacts);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+// exports.getAllContacts = async (req, res) => {
+//   try {
+//     const contacts = await Contact.find();
+//     const populatedContacts = await Promise.all(
+//       contacts.map(async (contact) => {
+//         const customer = await Customer.findById(contact.customer);
+//         const customerName = customer ? customer.name : 'Unknown'; 
+//         const { _id, ...contactData } = contact.toObject(); // Exclude the _id field from the contact data
+//         return { ...contactData, customerName }; // Return the contact data with the customer name
+//       })
+//     );
+//     res.json(populatedContacts);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 exports.getAllContacts = async (req, res) => {
   try {
-    const contacts = await Contact.find().populate('customer', 'name');
-    res.json(contacts);
+    const contacts = await Contact.find();
+    const populatedContacts = await Promise.all(
+      contacts.map(async (contact) => {
+        const customer = await Customer.findById(contact.customer);
+        const customerName = customer ? customer.name : 'Unknown'; 
+        const contactData = { ...contact.toObject(), customerName }; // Include the _id field in the contact data
+        return contactData; // Return the contact data with the customer name
+      })
+    );
+    res.json(populatedContacts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+
 
 // Get a single contact with customer name
 exports.getContact = async (req, res) => {

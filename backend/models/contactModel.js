@@ -3,9 +3,9 @@ const  mongoosePaginate = require("mongoose-paginate");
 
 
 const contactSchema = new mongoose.Schema({
-  customer: { type: mongoose.Schema.Types.ObjectId, 
+  customer: [{ type: mongoose.Schema.Types.ObjectId, 
   ref: 'Customer',
-  required:true },
+  required:true }],
   name: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, required: true },
