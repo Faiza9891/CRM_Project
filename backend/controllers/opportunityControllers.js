@@ -3,7 +3,7 @@ const Opportunity = require('../models/opportunityModel');
 // Get all opportunities
 exports.getAllOpportunities = async (req, res) => {
   try {
-    const opportunities = await Opportunity.find();
+    const opportunities = await Opportunity.find().populate('customer','name').populate('contact','name');
     res.json(opportunities);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -25,7 +25,7 @@ exports.addOpportunity = async (req, res) => {
 exports.getOpportunity = async (req, res) => {
   const { id } = req.params;
   try {
-    const opportunity = await Opportunity.findById(id);
+    const opportunity = await Opportunity.findById(id).populate('customer','name').populate('contact','name');
     if (!opportunity) {
       return res.status(404).json({ message: 'Opportunity not found' });
     }

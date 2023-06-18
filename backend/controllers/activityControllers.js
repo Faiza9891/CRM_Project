@@ -1,31 +1,50 @@
 const Activity = require('../models/activityModel');
 
-// Get all activities
+
 exports.getAllActivities = async (req, res) => {
   try {
-    const activities = await Activity.find();
+    const activities = await Activity.find().populate('customer','name').populate('contact','name');
     res.json(activities);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// Create a new activity
 exports.addActivity = async (req, res) => {
-  const activity = new Activity(req.body);
   try {
+    const { customer, contact, activityType, dateTime, description, assignedUser, status } = req.body;
+    const activity = new Activity({
+      customer,
+      contact,
+      activityType,
+      dateTime,
+      description,
+      assignedUser,
+      status
+    });
     const newActivity = await activity.save();
     res.status(201).json(newActivity);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
+
+// Create a new activity
+// exports.addActivity = async (req, res) => {
+//   const activity = new Activity(req.body);
+//   try {
+//     const newActivity = await activity.save();
+//     res.status(201).json(newActivity);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
 
 // Get a specific activity by ID
 exports.getActivity = async (req, res) => {
   const { id } = req.params;
   try {
-    const activity = await Activity.findById(id);
+    const activity = await Activity.findById(id).populate('customer','name').populate('contact','name');
     if (!activity) {
       return res.status(404).json({ message: 'Activity not found' });
     }
