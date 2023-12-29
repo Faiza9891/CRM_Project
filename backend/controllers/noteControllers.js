@@ -2,8 +2,14 @@ const Note = require('../models/noteModel');
 
 // Get all notes
 const getAllNotes = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = 20;
+  
   try {
-    const notes = await Note.find().populate('customer','name').populate('contact','name');
+    const notes = await Note.find()
+    .skip((page - 1) * limit)
+    .limit(limit)
+    .populate('customer','name').populate('contact','name');
     res.json(notes);
   } catch (error) {
     res.status(500).json({ message: error.message });

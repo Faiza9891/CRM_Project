@@ -2,8 +2,14 @@ const Opportunity = require('../models/opportunityModel');
 
 // Get all opportunities
 exports.getAllOpportunities = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = 20;
+  
   try {
-    const opportunities = await Opportunity.find().populate('customer','name').populate('contact','name');
+    const opportunities = await Opportunity.find()
+    .skip((page - 1) * limit)
+    .limit(limit)
+    .populate('customer','name').populate('contact','name');
     res.json(opportunities);
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -33,8 +33,13 @@ const Interaction = require('../models/interactionModel');
 //   }
 // };
 exports.getAllInteractions = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = 20;
   try {
-    const interactions = await Interaction.find().populate('customer', 'name');
+    const interactions = await Interaction.find()
+    .skip((page - 1) * limit)
+    .limit(limit)
+    .populate('customer', 'name');
     res.json(interactions);
   } catch (error) {
     res.status(500).json({ message: error.message });

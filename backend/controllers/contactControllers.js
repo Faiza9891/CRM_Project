@@ -1,15 +1,30 @@
 const Contact = require('../models/contactModel');
+const { paginate } = require('mongoose-paginate');
 
 
+// exports.getAllContacts = async (req, res) => {
+//   try {
+//     const contacts = await Contact.find().populate('customer','name');
+//     res.json(contacts);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 exports.getAllContacts = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = 20;
+  
   try {
-    const contacts = await Contact.find().populate('customer','name');
+    const contacts = await Contact.find()
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .populate('customer', 'name')
+    
     res.json(contacts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 // Get a single contact with customer name
 exports.getContact = async (req, res) => {

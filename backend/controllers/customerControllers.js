@@ -2,8 +2,12 @@ const Customer = require("../models/customerModels")
 
 
 exports.getAllCustomers = async (req, res) => {
+  // const page = parseInt(req.query.page) || 1;
+  // const limit = 20;
     try {
-      const customers = await Customer.find(req.params.id);
+      const customers = await Customer.find(req.params.id)
+      // .skip((page - 1) * limit)
+      // .limit(limit);
       res.json(customers);
     } catch (error) {
       res.status(500).json({ error: 'Data Not Found' });

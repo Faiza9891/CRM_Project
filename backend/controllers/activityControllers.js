@@ -1,9 +1,25 @@
 const Activity = require('../models/activityModel');
 
 
+// exports.getAllActivities = async (req, res) => {
+//   try {
+//     const activities = await Activity.find().populate('customer','name').populate('contact','name');
+//     res.json(activities);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 exports.getAllActivities = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = 20;
+  
   try {
-    const activities = await Activity.find().populate('customer','name').populate('contact','name');
+    const activities = await Activity.find()
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .populate('customer', 'name')
+      .populate('contact', 'name');
+    
     res.json(activities);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -29,16 +45,6 @@ exports.addActivity = async (req, res) => {
   }
 };
 
-// Create a new activity
-// exports.addActivity = async (req, res) => {
-//   const activity = new Activity(req.body);
-//   try {
-//     const newActivity = await activity.save();
-//     res.status(201).json(newActivity);
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// };
 
 // Get a specific activity by ID
 exports.getActivity = async (req, res) => {
